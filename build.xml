@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="cms-ir application" default="app:about" description="">
+    <property name="environment" value="dev"/>
+    <property name="tasks" value="${project.basedir}/build/task.xml"/>
+    <import file="${tasks}" />
+</project>

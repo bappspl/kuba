@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="cms-ir application" default="app:about">
+    <target name="app:about" description="List files">
+        <echo message="Basic CMS created by web-ir"/>
+    </target>
+
+    <target name="db:config" description="Configure database credentials">
+        <if>
+            <not>
+                <isset property="dbHost"/>
+            </not>
+            <then>
+                <input propertyname="dbHost" defaultValue="localhost">Enter db host:</input>
+            </then>
+        </if>
+        <if>
+            <not>
+                <isset property="dbUser"/>
+            </not>
+            <then>
+                <input propertyname="dbUser" defaultValue="root">Enter db user:</input>
+            </then>
+        </if>
+        <if>
+            <not>
+                <isset property="dbName"/>
+            </not>
+            <then>
+                <input propertyname="dbName" defaultValue="cms-ir">Enter db name:</input>
+            </then>
+        </if>
+        <if>
+            <not>
+                <isset property="dbPass"/>
+            </not>
+            <then>
+                <input propertyname="dbPass" defaultValue="">Enter db password:</input>
+            </then>
+        </if>
+
+        <property name="origBuildFile" value="${project.basedir}/build/dev.properties" />
+        <property name="tempBuildFile" value="${project.basedir}/build/dev.properties.temp" />
+        <copy file="${origBuildFile}" tofile="${tempBuildFile}" overwrite="true" />
+        <copy file="${tempBuildFile}" tofile="${origBuildFile}" overwrite="true">
+            <filterchain>
+                <replaceregexp>
+                    <regexp pattern="db.name.+" replace="db.name = ${dbName}" ignoreCase="false"/>
+                    <regexp pattern="db.host.+" replace="db.host = ${dbHost}" ignoreCase="false"/>
+                    <regexp pattern="db.user.+" replace="db.user = ${dbUser}" ignoreCase="false"/>
+                    <regexp pattern="db.pass.+" replace="db.pass = ${dbPass}" ignoreCase="false"/>
+                </replaceregexp>
+            </filterchain>
+        </copy>
+        <delete file="${tempBuildFile}" />
+
+
+        <property name="configFile" value="${project.basedir}/config/autoload/local.php" />
+        <property name="tempConfigFile" value="${project.basedir}/config/autoload/local.temp" />
+        <copy file="${configFile}" tofile="${tempConfigFile}" overwrite="true" />
+        <copy file="${tempConfigFile}" tofile="${configFile}" overwrite="true">
+            <filterchain>
+                <replaceregexp>
+                    <regexp pattern="dbname=.+;" replace="dbname=${dbName};" ignoreCase="false"/>
+                    <regexp pattern="hostname=.+" replace="hostname=${dbHost}'," ignoreCase="false"/>
+                    <regexp pattern="'password'.+" replace="'password' => '${dbPass}'," ignoreCase="false" />
+                    <regexp pattern="'username'.+" replace="'username' => '${dbUser}'," ignoreCase="false" />
+                    <regexp pattern="'database'.+" replace="'database' => '${dbName}'," ignoreCase="false" />
+                </replaceregexp>
+            </filterchain>
+        </copy>
+        <delete file="${tempConfigFile}" />
+
+    </target>
+
+    <target name="init" description="Load main settings">
+        <if>
+            <not>
+                <isset property="environment"/>
+            </not>
+            <then>
+                <input propertyname="environment" validargs="dev,prod">Please, enter environment name</input>
+            </then>
+        </if>
+        <property file="./build/${environment}.properties"/>
+    </target>
+
+    <target name="db:create" depends="init">
+        <pdo url="${pdo.driver}:host=${db.host};"
+             userId="${db.user}" password="${db.pass}"
+             onerror="abort">
+            CREATE DATABASE `${db.name}` CHARACTER SET utf8 COLLATE utf8_general_ci;
+        </pdo>
+    </target>
+
+    <target name="db:drop" depends="init">
+        <pdo url="${pdo.driver}:host=${db.host};"
+             userId="${db.user}" password="${db.pass}"
+             onerror="abort">
+            DROP DATABASE IF EXISTS `${db.name}`;
+        </pdo>
+    </target>
+
+    <target name="db:migrate" depends="init">
+
+        <exec command="${phinx.bin} migrate --configuration ${phinx.config} --environment ${environment}"
+              checkreturn="true"
+              passthru="true"
+                />
+    </target>
+
+    <target name="app:rebuild" depends="db:drop,db:create,db:migrate"/>
+    
+</project>

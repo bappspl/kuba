@@ -1,0 +1,9 @@
+project.source.dir = C:\xampp\htdocs\web-ir\cms-ir
+sync.source.dir = ${project.source.dir}
+phinx.bin = C:\xampp\htdocs\web-ir\cms-ir\vendor\robmorgan\phinx\bin\phinx.bat
+phinx.config = phinx.yml
+pdo.driver = mysql
+db.host = localhost
+db.name = cms-ir
+db.user = root
+db.pass = 

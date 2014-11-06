@@ -1,0 +1,16 @@
+<?php
+return array(
+	'mail' => array(
+		'transport' => array(
+			'options' => array(
+				'host'              => 'mail.web-ir.pl',
+				'connection_class'  => 'plain',
+				'connection_config' => array(
+					'username' => 'mailer@web-ir.pl',
+					'password' => 'web-ir',
+					'ssl' => 'tls'
+				),
+			),  
+		),
+	),
+);
