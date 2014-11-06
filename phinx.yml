@@ -8,7 +8,7 @@ environments:
     dev:
         adapter: mysql
         host: localhost
-        name: cms-ir
+        name: kuba
         user: root
         pass: ''
         port: 3306
