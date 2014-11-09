@@ -10,3 +10,4 @@ composer.lock
 vendor/*
 /build/dev.properties
 /public/files/*
+/public/temp_files/*
