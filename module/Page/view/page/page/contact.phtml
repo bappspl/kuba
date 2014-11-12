@@ -1,0 +1,48 @@
+<?php /* @var $page \CmsIr\Page\Model\Page */?>
+<?php echo $this->partial('partial/breadcrumbs', array('breadcrumbs' => array('/' => 'Strona główna', $page->getName()))); ?>
+
+<div class="container">
+    <div class="row">
+        <!-- BLOG LIST SECTION -->
+        <div class="col-sm-12">
+            <div class="section">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <?php echo $page->getContent(); ?>
+
+                        <section id="cd-google-map">
+                            <div id="google-container"></div>
+                            <div id="cd-zoom-in"></div>
+                            <div id="cd-zoom-out"></div>
+                        </section>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <form role="form" id="contact-form">
+                            <div class="form-group">
+                                <label>Imię i Nazwisko:</label>
+                                <input type="text" class="form-control" required name="name"/>
+                            </div>
+                            <div class="form-group">
+                                <label>Adres email:</label>
+                                <input type="text" class="form-control" required name="email"/>
+                            </div>
+                            <div class="form-group">
+                                <label>Wiadomość:</label>
+                                <textarea style="height: 110px" class="form-control" required name="text"></textarea>
+                            </div>
+                            <button class="btn btn-success">Wyślij wiadomość</button>
+                        </form>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<?php echo $this->partial('partial/contact-modal'); ?>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAMXIADDYpjC70apohPnVfbavUKwwpkINo"></script>
+<script src="<?php echo $this->basePath().'/js/contact.js'; ?>"></script>

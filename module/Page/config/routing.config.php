@@ -21,6 +21,52 @@ return array(
             ),
         ),
     ),
+    'newsList' => array(
+        'type' => 'Segment',
+        'options' => array(
+            'route'    => '/aktualnosci',
+            'defaults' => array(
+                'controller' => 'Page\Controller\Page',
+                'action'     => 'newsList',
+            ),
+        ),
+    ),
+    'viewNews' => array(
+        'type' => 'Segment',
+        'options' => array(
+            'route'    => '/aktualnosci/:slug',
+            'defaults' => array(
+                'controller' => 'Page\Controller\Page',
+                'action'     => 'viewNews',
+            ),
+            'constraints' => array(
+                'slug' => '[a-zA-Z0-9_-]+'
+            ),
+        ),
+    ),
+    'eventList' => array(
+        'type' => 'Segment',
+        'options' => array(
+            'route'    => '/wydarzenia',
+            'defaults' => array(
+                'controller' => 'Page\Controller\Page',
+                'action'     => 'eventList',
+            ),
+        ),
+    ),
+    'viewEvent' => array(
+        'type' => 'Segment',
+        'options' => array(
+            'route'    => '/wydarzenia/:slug',
+            'defaults' => array(
+                'controller' => 'Page\Controller\Page',
+                'action'     => 'viewEvent',
+            ),
+            'constraints' => array(
+                'slug' => '[a-zA-Z0-9_-]+'
+            ),
+        ),
+    ),
     'save-subscriber' => array(
         'type' => 'Zend\Mvc\Router\Http\Literal',
         'options' => array(
@@ -28,6 +74,16 @@ return array(
             'defaults' => array(
                 'controller' => 'Page\Controller\Page',
                 'action'     => 'saveSubscriberAjax',
+            ),
+        ),
+    ),
+    'contact-form' => array(
+        'type' => 'Zend\Mvc\Router\Http\Literal',
+        'options' => array(
+            'route'    => '/contact-form',
+            'defaults' => array(
+                'controller' => 'Page\Controller\Page',
+                'action'     => 'contactForm',
             ),
         ),
     ),

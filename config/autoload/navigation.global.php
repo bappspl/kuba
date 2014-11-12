@@ -88,27 +88,27 @@ return array(
                         'visibleInPrimary' => false
                     ),
                     array(
-                        'label' => 'Lista referencji',
+                        'label' => 'Lista wydarzeń',
                         'route' => 'post-list',
-                        'params' => array('category' => 'testimonials'),
+                        'params' => array('category' => 'event'),
                         'visibleInPrimary' => true
                     ),
                     array(
-                        'label' => 'Tworzenie referencji',
+                        'label' => 'Tworzenie wydarzenia',
                         'route' => 'post-list/post-create',
-                        'params' => array('category' => 'testimonials'),
+                        'params' => array('category' => 'event'),
                         'visibleInPrimary' => false
                     ),
                     array(
-                        'label' => 'Edycja referencji',
+                        'label' => 'Edycja wydarzenia',
                         'route' => 'post-list/post-edit',
-                        'params' => array('category' => 'testimonials'),
+                        'params' => array('category' => 'event'),
                         'visibleInPrimary' => false
                     ),
                     array(
-                        'label' => 'Podgląd referencji',
+                        'label' => 'Podgląd wydarzenia',
                         'route' => 'post-list/post-preview',
-                        'params' => array('category' => 'testimonials'),
+                        'params' => array('category' => 'event'),
                         'visibleInPrimary' => false
                     ),
                 ),

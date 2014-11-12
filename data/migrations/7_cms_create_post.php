@@ -15,10 +15,18 @@ class CmsCreatePost extends AbstractMigration
              ->addColumn('text', 'text')
              ->addForeignKey('status_id', 'cms_status', 'id', array('delete' => 'CASCADE', 'update' => 'NO_ACTION'))
              ->save();
+
+        $this->table('cms_post_file', array())
+            ->addColumn('filename', 'string')
+            ->addColumn('post_id', 'integer')
+            ->addColumn('size', 'string')
+            ->addForeignKey('post_id', 'cms_post', 'id', array('delete' => 'CASCADE', 'update' => 'NO_ACTION'))
+            ->save();
     }
 
     public function down()
     {
         $this->dropTable('cms_post');
+        $this->dropTable('cms_post_file');
     }
 }

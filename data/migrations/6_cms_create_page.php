@@ -11,7 +11,7 @@ class CmsCreatePage extends AbstractMigration
              ->addColumn('name', 'string')
              ->addColumn('slug', 'string')
              ->addColumn('status_id', 'integer')
-             ->addColumn('content', 'string', array('null'=>true))
+             ->addColumn('content', 'text', array('null'=>true))
              ->addForeignKey('status_id', 'cms_status', 'id', array('delete' => 'CASCADE', 'update' => 'NO_ACTION'))
              ->save();
     }

@@ -18,17 +18,16 @@ return array(
             'partial/layout/footer' => __DIR__ . '/../view/partial/layout/footer.phtml',
             'partial/layout/footer-about' => __DIR__ . '/../view/partial/layout/footer-about.phtml',
             'partial/layout/footer-contact' => __DIR__ . '/../view/partial/layout/footer-contact.phtml',
-            'partial/layout/footer-navigation' => __DIR__ . '/../view/partial/layout/footer-navigation.phtml',
             'partial/layout/footer-newsletter' => __DIR__ . '/../view/partial/layout/footer-newsletter.phtml',
             'partial/layout/footer-terms' => __DIR__ . '/../view/partial/layout/footer-terms.phtml',
 
             'partial/page/banners' => __DIR__ . '/../view/partial/page/banners.phtml',
-            'partial/page/gallery' => __DIR__ . '/../view/partial/page/gallery.phtml',
             'partial/page/offer' => __DIR__ . '/../view/partial/page/offer.phtml',
             'partial/page/slider' => __DIR__ . '/../view/partial/page/slider.phtml',
-            'partial/page/testimonials' => __DIR__ . '/../view/partial/page/testimonials.phtml',
 
             'partial/newsletter-modal' => __DIR__ . '/../view/partial/newsletter-modal.phtml',
+            'partial/contact-modal' => __DIR__ . '/../view/partial/contact-modal.phtml',
+            'partial/breadcrumbs' => __DIR__ . '/../view/partial/breadcrumbs.phtml',
         ),
         'template_path_stack' => array(
             'page_home_site' => __DIR__ . '/../view'

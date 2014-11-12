@@ -1,0 +1,32 @@
+<!-- BEGIN BERADCRUMB AND PAGE TITLE -->
+<?php if($breadcrumbs): ?>
+<div class="page-title-wrap">
+    <div class="container">
+        <ol class="breadcrumb">
+            <?php
+                $countLinks = count($breadcrumbs);
+                $lastLink = end($breadcrumbs);
+                $i = 1;
+                foreach($breadcrumbs as $kLink => $link)
+                {
+                    if($countLinks == $i)
+                    {
+                        echo '<li class="active">'.$link.'</li>';
+                    } else {
+                        echo '<li><a href="'. $kLink .'">'.$link.'</a></li>';
+                    }
+                    $i++;
+                }
+            ?>
+        </ol>
+        <h2 class="page-title"><?php echo $lastLink; ?></h2>
+    </div><!-- /.container -->
+
+    <div class="border-bottom">
+        <div class="container">
+            <div class="border-bottom-color bg-info"></div>
+        </div><!-- /.container -->
+    </div><!-- /.border-bottom -->
+</div><!-- /.page-title-wrap -->
+<!-- END BERADCRUMB AND PAGE TITLE -->
+<?php endif; ?>

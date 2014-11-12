@@ -1,0 +1,45 @@
+<?php echo $this->partial('partial/breadcrumbs', array('breadcrumbs' => array('/' => 'Strona główna', 'Wydarzenia'))); ?>
+
+<div class="container">
+    <div class="row">
+        <div class="section">
+            <?php if(!empty($events)): ?>
+                <?php /* @var $oneEvent \CmsIr\Post\Model\Post */ ?>
+                <?php foreach($events as $oneEvent): ?>
+                    <?php
+                    $files = $oneEvent->getFiles();
+                    $firstFile = reset($files);
+                    $fileName = $firstFile->getFilename();
+
+                    $title = $oneEvent->getName();
+                    $url = $oneEvent->getUrl();
+                    $text = strip_tags($oneEvent->getText());
+                    $date = $oneEvent->getDate();
+
+                    if(strlen($text) > 200) {
+                        $text = substr($text, 0, 200) . '..';
+                    }
+                    ?>
+
+                    <div class="col-sm-4">
+                        <!-- BEGIN STATIC IMAGE POST -->
+                        <div class="featured-post-wide">
+                            <img src="files/post/<?php echo $fileName; ?>" class="featured-img img-responsive" alt="Image">
+                            <div class="featured-text relative">
+                                <h3><a href="<?php echo $this->url('viewEvent', array('slug' => $url)); ?>"><?php echo $title; ?></a></h3>
+                                <p>
+                                    <?php echo $text; ?>
+                                </p>
+                                <p class="additional-post-wrap">
+                                    <span class="additional-post"><i class="fa fa-clock-o"></i> <b><?php echo $date; ?></b></span>
+                                </p>
+                                <p class="text-right"><a href="<?php echo $this->url('viewEvent', array('slug' => $url)); ?>" class="btn btn-info">Czytaj dalej</a></p>
+                            </div><!-- /.featured-text -->
+                        </div><!-- /.featured-post-wide -->
+                        <!-- END STATIC IMAGE POST -->
+                    </div><!-- /.col-sm-4 -->
+                <?php endforeach; ?>
+            <?php endif; ?>
+        </div>
+    </div>
+</div>

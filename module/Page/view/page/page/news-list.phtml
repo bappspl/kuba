@@ -1,0 +1,130 @@
+<?php echo $this->partial('partial/breadcrumbs', array('breadcrumbs' => array('/' => 'Strona główna', 'Aktualności'))); ?>
+<div class="container">
+<div class="row">
+<div class="col-sm-8 col-md-9">
+
+    <!-- BLOG LIST SECTION -->
+    <div class="section">
+        <ul class="media-list blog-list">
+
+            <?php if(!empty($news)): ?>
+                <?php /* @var $oneNews \CmsIr\Post\Model\Post */ ?>
+                <?php foreach($news as $oneNews): ?>
+                    <?php
+                        $files = $oneNews->getFiles();
+                        $firstFile = reset($files);
+                        $fileName = $firstFile->getFilename();
+
+                        $title = $oneNews->getName();
+                        $url = $oneNews->getUrl();
+                        $text = strip_tags($oneNews->getText());
+                        $date = $oneNews->getDate();
+
+                        if(strlen($text) > 330) {
+                            $text = substr($text, 0, 330) . '..';
+                        }
+                    ?>
+                    <li class="media">
+                        <a class="pull-left" href="<?php echo $this->url('viewNews', array('slug' => $url)); ?>">
+                            <img class="media-object img-post" src="files/post/<?php echo $fileName; ?>" alt="Image">
+                        </a>
+
+                        <div class="media-body">
+                            <h4 class="media-heading">
+                                <a href="<?php echo $this->url('viewNews', array('slug' => $url)); ?>">
+                                    <?php echo $title; ?>
+                                </a>
+                            </h4>
+
+                            <p class="small">
+                                <i class="fa fa-clock-o"></i> <b><?php echo $date; ?></b>
+                            </p>
+
+                            <p>
+                                <?php echo $text; ?>
+                            </p>
+                        </div>
+                        <!-- /.media-body -->
+                    </li>
+                <?php endforeach; ?>
+            <?php endif; ?>
+        </ul>
+
+
+        <!-- Begin pagination -->
+        <ul class="pagination info block-color separated">
+            <li class="disabled"><a href="#fakelink">&lsaquo;</a></li>
+            <li class="active"><a href="#fakelink">1</a></li>
+            <li><a href="#fakelink">2</a></li>
+            <li><a href="#fakelink">...</a></li>
+            <li><a href="#fakelink">10</a></li>
+            <li><a href="#fakelink">&rsaquo;</a></li>
+        </ul>
+        <!-- End pagination -->
+    </div>
+    <!-- /.section -->
+    <!-- END BLOG LIST SECTION -->
+
+
+</div>
+<!-- /.col-sm-8 col-md-9 -->
+
+<?php if(!empty($events)):?>
+<div class="col-sm-4 col-md-3">
+
+    <!-- BEGIN SIDEBAR -->
+    <div class="section sidebar">
+
+        <!-- Begin Recent post -->
+        <div class="panel panel-no-border panel-sidebar">
+            <div class="panel-heading">
+                <h3 class="panel-title">Ostatnie wydarzenia</h3>
+            </div>
+            <?php
+                $countEvents = count($events);
+                if($countEvents > 4) $max = 5; else $max = $countEvents;
+            ?>
+
+            <ul class="media-list">
+                <?php for($i=0; $i<$max; $i++): ?>
+                <?php
+                    $event = $events[$i];
+                    $files = $event->getFiles();
+                    $firstFile = reset($files);
+                    $fileName = $firstFile->getFilename();
+
+                    $title = $event->getName();
+                    $url = $event->getUrl();
+                    $text = strip_tags($event->getText());
+                    $date = $event->getDate();
+                    if(strlen($text) > 50) {
+                        $text = substr($text, 0, 50) . '..';
+                    }
+                ?>
+                <li class="media">
+                    <a class="pull-left" href="<?php echo $this->url('viewEvent', array('slug' => $url)); ?>">
+                        <img class="media-object img-post" src="files/post/<?php echo $fileName; ?>" alt="Image">
+                    </a>
+
+                    <div class="media-body">
+                        <p><a href="<?php echo $this->url('viewEvent', array('slug' => $url)); ?>"> <?php echo $text; ?> </a></p>
+                        <p class="small text-info"><?php echo $date; ?></p>
+                    </div>
+                </li>
+                <?php endfor; ?>
+            </ul>
+        </div>
+        <!-- /.panel panel-no-border panel-sidebar -->
+        <!-- End Recent post -->
+
+    </div>
+    <!-- /.section -->
+    <!-- END SIDEBAR -->
+
+</div>
+<!-- /.col-sm-4 col-md-3 -->
+<?php endif; ?>
+
+</div>
+<!-- /.row -->
+</div><!-- /.container -->

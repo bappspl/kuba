@@ -1,12 +1,15 @@
 <?php /* @var $page \CmsIr\Page\Model\Page */?>
+<?php echo $this->partial('partial/breadcrumbs', array('breadcrumbs' => array('/' => 'Strona główna', $page->getName()))); ?>
 
-<!-- BEGIN FIRST SECTION -->
-<div class="section">
-    <div class="container">
-        <h3><?php echo $page->getName() ?></h3>
-        <h4 class="light-font line-height-28 margin-top-50">
-            <?php echo $page->getContent() ?>
-        </h4>
-    </div><!-- /.container -->
-</div><!-- /.section -->
-<!-- END FIRST SECTION -->
+<div class="container">
+    <div class="row">
+        <!-- BLOG LIST SECTION -->
+        <div class="col-sm-12">
+            <div class="section">
+                <h4 class="light-font line-height-28 margin-top-50">
+                    <?php echo $page->getContent() ?>
+                </h4>
+            </div>
+        </div>
+    </div>
+</div>
