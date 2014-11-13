@@ -2,6 +2,7 @@
 
 namespace Page\Controller;
 
+use CmsIr\Post\Model\Post;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 
@@ -93,7 +94,7 @@ class PageController extends AbstractActionController
         $activeStatus = $this->getStatusTable()->getOneBy(array('slug' => 'active'));
         $activeStatusId = $activeStatus->getId();
 
-        $allNews = $this->getPostTable()->getBy(array('status_id' => $activeStatusId, 'category' => 'news'));
+        $allNews = $this->getPostTable()->getWithPaginationBy(new Post(), array('status_id' => $activeStatusId, 'category' => 'news'));
 
         /* @var $news \CmsIr\Post\Model\Post */
 
@@ -104,6 +105,11 @@ class PageController extends AbstractActionController
 
             $news->setFiles($newsFiles);
         }
+
+        $page = $this->params()->fromRoute('number') ? (int) $this->params()->fromRoute('number') : 1;
+        $allNews->setCurrentPageNumber($page);
+        $allNews->setItemCountPerPage(1);
+
 
         $allEvent = $this->getPostTable()->getBy(array('status_id' => $activeStatusId, 'category' => 'event'), 'date DESC');
 
@@ -120,6 +126,7 @@ class PageController extends AbstractActionController
         $viewParams = array();
         $viewParams['news'] = $allNews;
         $viewParams['events'] = array_values($allEvent);
+        $viewParams['paginator'] = $allNews;
         $viewModel = new ViewModel();
         $viewModel->setVariables($viewParams);
         return $viewModel;
