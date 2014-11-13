@@ -70,6 +70,19 @@ return array(
             ),
         ),
     ),
+    'viewPlan' => array(
+        'type' => 'Segment',
+        'options' => array(
+            'route'    => '/planowanie-imprezy/:slug',
+            'defaults' => array(
+                'controller' => 'Page\Controller\Page',
+                'action'     => 'viewPlan',
+            ),
+            'constraints' => array(
+                'slug' => '[a-zA-Z0-9_-]+'
+            ),
+        ),
+    ),
     'save-subscriber' => array(
         'type' => 'Zend\Mvc\Router\Http\Literal',
         'options' => array(
