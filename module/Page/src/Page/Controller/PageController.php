@@ -42,9 +42,12 @@ class PageController extends AbstractActionController
             $event->setFiles($eventFiles);
         }
 
+        $planning = $this->getPostTable()->getBy(array('status_id' => $activeStatusId, 'category' => 'planning'));
+
         $viewParams = array();
         $viewParams['items'] = $items;
         $viewParams['banners'] = $events;
+        $viewParams['planning'] = $planning;
         $viewModel = new ViewModel();
         $viewModel->setVariables($viewParams);
         return $viewModel;
@@ -242,6 +245,47 @@ class PageController extends AbstractActionController
         $viewParams = array();
         $viewParams['event'] = $event;
         $viewParams['news'] = array_values($allNews);
+        $viewModel = new ViewModel();
+        $viewModel->setVariables($viewParams);
+        return $viewModel;
+    }
+
+    public function viewPlanAction()
+    {
+        $this->layout('layout/home');
+        $aboutPage = $this->getPageService()->findOneBySlug('o-nas');
+        $text = strip_tags($aboutPage->getContent());
+        if(strlen($text) > 230) {
+            $text = substr($text, 0, 230) . '..';
+        }
+        $this->layout()->aboutContent = $text;
+
+        $slug = $this->params('slug');
+
+        /* @var $plan \CmsIr\Post\Model\Post */
+        $plan = $this->getPostTable()->getOneBy(array('url' => $slug));
+        $planId = $plan->getId();
+        $planFiles = $this->getPostFileTable()->getBy(array('post_id' => $planId));
+        $plan->setFiles($planFiles);
+
+        $activeStatus = $this->getStatusTable()->getOneBy(array('slug' => 'active'));
+        $activeStatusId = $activeStatus->getId();
+
+        $allEvent = $this->getPostTable()->getBy(array('status_id' => $activeStatusId, 'category' => 'event'), 'date DESC');
+
+        /* @var $event \CmsIr\Post\Model\Post */
+
+        foreach($allEvent as $event)
+        {
+            $eventsId = $event->getId();
+            $eventFiles = $this->getPostFileTable()->getBy(array('post_id' => $eventsId));
+
+            $event->setFiles($eventFiles);
+        }
+
+        $viewParams = array();
+        $viewParams['plan'] = $plan;
+        $viewParams['events'] = array_values($allEvent);
         $viewModel = new ViewModel();
         $viewModel->setVariables($viewParams);
         return $viewModel;

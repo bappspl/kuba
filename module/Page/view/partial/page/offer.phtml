@@ -1,5 +1,6 @@
 <div class="row">
     <!-- BEGIN SERVICES 4 COLUMN -->
+    <?php if(!empty($planning)): ?>
     <div class="section">
         <div class="container">
             <div class="section-heading">
@@ -7,44 +8,33 @@
                 <h3>Zorganizuj imprezę!</h3>
             </div><!-- /.section-heading -->
             <div class="row">
+                <?php /* @var $plan \CmsIr\Post\Model\Post */ ?>
+                <?php foreach($planning as $plan): ?>
+                    <?php
+                        $url = $plan->getUrl();
+                        switch($url){
+                            case 'pomysl': $icon = 'fa-lightbulb-o'; break;
+                            case 'termin': $icon = 'fa-calendar'; break;
+                            case 'budget': $icon = 'fa-money'; break;
+                            case 'miejsce': $icon = 'fa-globe'; break;
+                        }
+                        $text = strip_tags($plan->getText());
+                        if(strlen($text) > 140) {
+                            $text = substr($text, 0, 140) . '..';
+                        }
+                    ?>
                 <div class="col-sm-3 services-item text-center">
-                    <h4>Pomysł</h4>
-                    <i class="fa fa-flask icon-services-md bg-danger rounded"></i>
+                    <h4><a href="<?php echo $this->url('viewPlan', array('slug' => $url)); ?>"><?php echo $plan->getName(); ?></a></h4>
+                    <i class="fa <?php echo $icon; ?> icon-services-md bg-danger rounded"></i>
                     <p>
-                        Lorem ipsum dolor sit amet, consectetuer adipiscing elit,
-                        sed diam nonummy nibh euismod tincidunt ut laoreet
-                        dolore magna aliquam erat volutpat.
+                        <?php echo $text; ?>
                     </p>
                 </div><!-- /.col-sm-3 -->
-                <div class="col-sm-3 services-item text-center">
-                    <h4>Termin</h4>
-                    <i class="fa fa-apple icon-services-md bg-warning rounded"></i>
-                    <p>
-                        Lorem ipsum dolor sit amet, consectetuer adipiscing elit,
-                        sed diam nonummy nibh euismod tincidunt ut laoreet
-                        dolore magna aliquam erat volutpat.
-                    </p>
-                </div><!-- /.col-sm-3 -->
-                <div class="col-sm-3 services-item text-center">
-                    <h4>Budżet</h4>
-                    <i class="fa fa-crosshairs icon-services-md bg-success rounded"></i>
-                    <p>
-                        Lorem ipsum dolor sit amet, consectetuer adipiscing elit,
-                        sed diam nonummy nibh euismod tincidunt ut laoreet
-                        dolore magna aliquam erat volutpat.
-                    </p>
-                </div><!-- /.col-sm-3 -->
-                <div class="col-sm-3 services-item text-center">
-                    <h4>Miejsce</h4>
-                    <i class="fa fa-print icon-services-md bg-primary rounded"></i>
-                    <p>
-                        Lorem ipsum dolor sit amet, consectetuer adipiscing elit,
-                        sed diam nonummy nibh euismod tincidunt ut laoreet
-                        dolore magna aliquam erat volutpat.
-                    </p>
-                </div><!-- /.col-sm-3 -->
+                <?php endforeach; ?>
             </div><!-- /.row -->
         </div><!-- /.container -->
     </div><!-- /.section -->
+    <?php endif; ?>
+
     <!-- END SERVICES 4 COLUMN -->
 </div><!-- /.row -->

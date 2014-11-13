@@ -111,6 +111,30 @@ return array(
                         'params' => array('category' => 'event'),
                         'visibleInPrimary' => false
                     ),
+                    array(
+                        'label' => 'Planowanie imprezy',
+                        'route' => 'post-list',
+                        'params' => array('category' => 'planning'),
+                        'visibleInPrimary' => true
+                    ),
+                    array(
+                        'label' => 'Tworzenie planu',
+                        'route' => 'post-list/post-create',
+                        'params' => array('category' => 'planning'),
+                        'visibleInPrimary' => false
+                    ),
+                    array(
+                        'label' => 'Edycja planu',
+                        'route' => 'post-list/post-edit',
+                        'params' => array('category' => 'planning'),
+                        'visibleInPrimary' => false
+                    ),
+                    array(
+                        'label' => 'Podgląd planu',
+                        'route' => 'post-list/post-preview',
+                        'params' => array('category' => 'planning'),
+                        'visibleInPrimary' => false
+                    ),
                 ),
             ),
             array(
