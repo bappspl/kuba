@@ -11,9 +11,12 @@
                 <?php /* @var $oneNews \CmsIr\Post\Model\Post */ ?>
                 <?php foreach($news as $oneNews): ?>
                     <?php
+
                         $files = $oneNews->getFiles();
-                        $firstFile = reset($files);
-                        $fileName = $firstFile->getFilename();
+                        if(is_object($files)){
+                            $firstFile = reset($files);
+                            $fileName = $firstFile->getFilename();
+                        }
 
                         $title = $oneNews->getName();
                         $url = $oneNews->getUrl();
@@ -26,7 +29,11 @@
                     ?>
                     <li class="media">
                         <a class="pull-left" href="<?php echo $this->url('viewNews', array('slug' => $url)); ?>">
-                            <img class="media-object img-post" src="files/post/<?php echo $fileName; ?>" alt="Image">
+
+                            <?php if(!empty($fileName)): ?>
+                                <img class="media-object img-post" src="files/post/<?php echo $fileName; ?>" alt="Image">
+                            <?php endif ?>
+
                         </a>
 
                         <div class="media-body">
@@ -50,17 +57,9 @@
             <?php endif; ?>
         </ul>
 
+        <?php echo $this->paginationControl($paginator, 'sliding', array('partial/paginator.phtml', 'Album'), array('route' => 'newsList')) ?>
 
-        <!-- Begin pagination -->
-        <ul class="pagination info block-color separated">
-            <li class="disabled"><a href="#fakelink">&lsaquo;</a></li>
-            <li class="active"><a href="#fakelink">1</a></li>
-            <li><a href="#fakelink">2</a></li>
-            <li><a href="#fakelink">...</a></li>
-            <li><a href="#fakelink">10</a></li>
-            <li><a href="#fakelink">&rsaquo;</a></li>
-        </ul>
-        <!-- End pagination -->
+       
     </div>
     <!-- /.section -->
     <!-- END BLOG LIST SECTION -->
