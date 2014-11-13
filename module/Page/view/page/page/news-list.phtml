@@ -11,12 +11,9 @@
                 <?php /* @var $oneNews \CmsIr\Post\Model\Post */ ?>
                 <?php foreach($news as $oneNews): ?>
                     <?php
-
                         $files = $oneNews->getFiles();
-                        if(is_object($files)){
-                            $firstFile = reset($files);
-                            $fileName = $firstFile->getFilename();
-                        }
+                        $firstFile = reset($files);
+                        if(is_object($firstFile)) $fileName = $firstFile->getFilename();
 
                         $title = $oneNews->getName();
                         $url = $oneNews->getUrl();
@@ -30,8 +27,8 @@
                     <li class="media">
                         <a class="pull-left" href="<?php echo $this->url('viewNews', array('slug' => $url)); ?>">
 
-                            <?php if(!empty($fileName)): ?>
-                                <img class="media-object img-post" src="files/post/<?php echo $fileName; ?>" alt="Image">
+                            <?php if(!empty($firstFile)): ?>
+                                <img class="media-object img-post" src="/files/post/<?php echo $fileName; ?>" alt="Image">
                             <?php endif ?>
 
                         </a>
@@ -59,7 +56,7 @@
 
         <?php echo $this->paginationControl($paginator, 'sliding', array('partial/paginator.phtml', 'Album'), array('route' => 'newsList')) ?>
 
-       
+
     </div>
     <!-- /.section -->
     <!-- END BLOG LIST SECTION -->

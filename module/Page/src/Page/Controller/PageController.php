@@ -98,18 +98,21 @@ class PageController extends AbstractActionController
 
         /* @var $news \CmsIr\Post\Model\Post */
 
+        $page = $this->params()->fromRoute('number') ? (int) $this->params()->fromRoute('number') : 1;
+        $allNews->setCurrentPageNumber($page);
+        $allNews->setItemCountPerPage(2);
+
+        $test = array();
+
         foreach($allNews as $news)
         {
             $newsId = $news->getId();
             $newsFiles = $this->getPostFileTable()->getBy(array('post_id' => $newsId));
 
             $news->setFiles($newsFiles);
+            $test[] = $news;
+
         }
-
-        $page = $this->params()->fromRoute('number') ? (int) $this->params()->fromRoute('number') : 1;
-        $allNews->setCurrentPageNumber($page);
-        $allNews->setItemCountPerPage(1);
-
 
         $allEvent = $this->getPostTable()->getBy(array('status_id' => $activeStatusId, 'category' => 'event'), 'date DESC');
 
@@ -124,8 +127,8 @@ class PageController extends AbstractActionController
         }
 
         $viewParams = array();
-        $viewParams['news'] = $allNews;
-        $viewParams['events'] = array_values($allEvent);
+        $viewParams['news'] = $test;
+//        $viewParams['events'] = array_values($allEvent);
         $viewParams['paginator'] = $allNews;
         $viewModel = new ViewModel();
         $viewModel->setVariables($viewParams);
