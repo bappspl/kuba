@@ -50,10 +50,13 @@ return array(
     'eventList' => array(
         'type' => 'Segment',
         'options' => array(
-            'route'    => '/wydarzenia',
+            'route'    => '/wydarzenia[/strona/:number]',
             'defaults' => array(
                 'controller' => 'Page\Controller\Page',
                 'action'     => 'eventList',
+            ),
+            'constraints' => array(
+                'number' => '[0-9_-]+'
             ),
         ),
     ),

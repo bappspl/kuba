@@ -101,18 +101,21 @@ class PageController extends AbstractActionController
 
         /* @var $news \CmsIr\Post\Model\Post */
 
+        $page = $this->params()->fromRoute('number') ? (int) $this->params()->fromRoute('number') : 1;
+        $allNews->setCurrentPageNumber($page);
+        $allNews->setItemCountPerPage(2);
+
+        $test = array();
+
         foreach($allNews as $news)
         {
             $newsId = $news->getId();
             $newsFiles = $this->getPostFileTable()->getBy(array('post_id' => $newsId));
 
             $news->setFiles($newsFiles);
+            $test[] = $news;
+
         }
-
-        $page = $this->params()->fromRoute('number') ? (int) $this->params()->fromRoute('number') : 1;
-        $allNews->setCurrentPageNumber($page);
-        $allNews->setItemCountPerPage(1);
-
 
         $allEvent = $this->getPostTable()->getBy(array('status_id' => $activeStatusId, 'category' => 'event'), 'date DESC');
 
@@ -127,7 +130,7 @@ class PageController extends AbstractActionController
         }
 
         $viewParams = array();
-        $viewParams['news'] = $allNews;
+        $viewParams['news'] = $test;
         $viewParams['events'] = array_values($allEvent);
         $viewParams['paginator'] = $allNews;
         $viewModel = new ViewModel();
@@ -189,20 +192,30 @@ class PageController extends AbstractActionController
         $activeStatus = $this->getStatusTable()->getOneBy(array('slug' => 'active'));
         $activeStatusId = $activeStatus->getId();
 
-        $allEvent = $this->getPostTable()->getBy(array('status_id' => $activeStatusId, 'category' => 'event'));
+        $allEvent = $this->getPostTable()->getWithPaginationBy(new Post(), array('status_id' => $activeStatusId, 'category' => 'event'));
 
         /* @var $event \CmsIr\Post\Model\Post */
 
+        $page = $this->params()->fromRoute('number') ? (int) $this->params()->fromRoute('number') : 1;
+        $allEvent->setCurrentPageNumber($page);
+        $allEvent->setItemCountPerPage(2);
+
+        $test = array();
+
         foreach($allEvent as $event)
         {
-            $eventsId = $event->getId();
-            $eventFiles = $this->getPostFileTable()->getBy(array('post_id' => $eventsId));
+            $eventId = $event->getId();
+            $eventFiles = $this->getPostFileTable()->getBy(array('post_id' => $eventId));
 
             $event->setFiles($eventFiles);
+            $test[] = $event;
+
         }
 
         $viewParams = array();
-        $viewParams['events'] = $allEvent;
+        $viewParams['events'] = $test;
+        $viewParams['paginator'] = $allEvent;
+
         $viewModel = new ViewModel();
         $viewModel->setVariables($viewParams);
         return $viewModel;
@@ -350,6 +363,19 @@ class PageController extends AbstractActionController
         }
 
         $viewParams = array();
+
+        $activeStatus = $this->getStatusTable()->getOneBy(array('slug' => 'active'));
+        $activeStatusId = $activeStatus->getId();
+
+        $events = $this->getPostTable()->getBy(array('status_id' => $activeStatusId, 'category' => 'event'));
+        foreach($events as $event)
+        {
+            $eventFiles = $this->getPostFileTable()->getOneBy(array('post_id' => $event->getId()));
+            $event->setFiles($eventFiles);
+        }
+        $viewParams['banners'] = $events;
+
+
         $viewModel = new ViewModel();
 
         $subscriber = $this->getSubscriberTable()->getOneBy(array('confirmation_code' => $code));
@@ -402,8 +428,8 @@ class PageController extends AbstractActionController
             $message->addTo('biuro@web-ir.pl')
                 ->addFrom('mailer@web-ir.pl')
                 ->setSubject('Wiadomość z formularza kontaktowego')
-                ->setBody("Imię i Nazwisko: " . $name .
-                          "Email: " . $email .
+                ->setBody("Imię i Nazwisko: " . $name . "<br>" .
+                          "Email: " . $email . "<br>" .
                           "Treść: " . $text
                         );
             $transport->send($message);

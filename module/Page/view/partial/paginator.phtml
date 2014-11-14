@@ -4,13 +4,13 @@
             <?php if (isset($this->previous)): ?>
                 <li>
                     <a href="<?php echo $this->url($this->route, array('number' => $this->previous)); ?>">
-                        <<
+                        <
                     </a>
                 </li>
             <?php else: ?>
                 <li class="disabled">
                     <a href="#">
-                        <<
+                        <
                     </a>
                 </li>
             <?php endif; ?>
@@ -33,13 +33,13 @@
             <?php if (isset($this->next)): ?>
                 <li>
                     <a href="<?php echo $this->url($this->route, array('number' => $this->next)); ?>">
-                        >>
+                        >
                     </a>
                 </li>
             <?php else: ?>
                 <li class="disabled">
                     <a href="#">
-                        >>
+                        >
                     </a>
                 </li>
             <?php endif; ?>
