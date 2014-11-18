@@ -8,6 +8,8 @@ use Zend\View\Model\ViewModel;
 
 use Zend\Json\Json;
 use Zend\Mail\Message;
+use Zend\Mime\Message as MimeMessage;
+use Zend\Mime\Part as MimePart;
 use CmsIr\Newsletter\Model\Subscriber;
 
 use Zend\Authentication\AuthenticationService;
@@ -24,6 +26,8 @@ class PageController extends AbstractActionController
 
         $slider = $this->getSliderService()->findOneBySlug('slider-glowny');
         $items = $slider->getItems();
+
+//        $slider = $this->getSliderService()->findOneBySlug('slide-glowny');
 
         $aboutPage = $this->getPageService()->findOneBySlug('o-nas');
         $text = strip_tags($aboutPage->getContent());
@@ -339,6 +343,7 @@ class PageController extends AbstractActionController
         $this->getRequest()->getServer();
         $message->addTo($email)
             ->addFrom('mailer@web-ir.pl')
+            ->setEncoding('UTF-8')
             ->setSubject('Prosimy o potwierdzenie subskrypcji!')
             ->setBody("W celu potwierdzenia subskrypcji kliknij w link => " .
                 $this->getRequest()->getServer('HTTP_ORIGIN') .
@@ -422,16 +427,24 @@ class PageController extends AbstractActionController
             $email = $request->getPost('email');
             $text = $request->getPost('text');
 
+            $htmlMarkup = "Imię i Nazwisko: " . $name . "<br>" .
+                "Email: " . $email . "<br>" .
+                "Treść: " . $text;
+
+            $html = new MimePart($htmlMarkup);
+            $html->type = "text/html";
+
+            $body = new MimeMessage();
+            $body->setParts(array($html));
+
             $transport = $this->getServiceLocator()->get('mail.transport');
             $message = new Message();
             $this->getRequest()->getServer();
-            $message->addTo('biuro@web-ir.pl')
+            $message->addTo('idzikkrzysztof91@gmail.com')
                 ->addFrom('mailer@web-ir.pl')
+                ->setEncoding('UTF-8')
                 ->setSubject('Wiadomość z formularza kontaktowego')
-                ->setBody("Imię i Nazwisko: " . $name . "<br>" .
-                          "Email: " . $email . "<br>" .
-                          "Treść: " . $text
-                        );
+                ->setBody($body);
             $transport->send($message);
 
             $jsonObject = Json::encode($params['status'] = 'success', true);
