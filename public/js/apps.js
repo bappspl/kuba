@@ -201,10 +201,29 @@ $(document).ready(function(){
 	/** BEGIN SUMMERNOTE **/
 	if ($('.summernote-lg').length > 0){
 		$('.summernote-lg').summernote({
-			height: 170
+			height: 170,
+            onImageUpload: function(files, editor, welEditable) {
+                sendFile(files[0], editor, welEditable);
+            }
 		});
 	}
-	
+
+    function sendFile(file, editor, welEditable) {
+        data = new FormData();
+        data.append("file", file);
+        $.ajax({
+            data: data,
+            type: "POST",
+            url: "/cms-ir/system-upload",
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function(url) {
+                editor.insertImage(welEditable, url);
+            }
+        });
+    }
+
 	if ($('.summernote-sm').length > 0){
 		$('.summernote-sm').summernote({
 			height: 111,
