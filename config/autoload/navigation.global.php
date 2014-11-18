@@ -7,7 +7,7 @@ return array(
                 'label' => 'Dashboard',
                 'route' => 'dashboard',
                 'class' => 'fa fa-home',
-                'id'    => 2,
+                'id'    => 4,
             ),
             array(
                 'label' => 'Menu',
@@ -31,7 +31,7 @@ return array(
                 'label' => 'Strony',
                 'route' => 'page-main',
                 'class' => 'fa fa-file-text-o',
-                'id'    => 2,
+                'id'    => 4,
                 'pages' => array(
                     array(
                         'label' => 'Dodaj nową',
@@ -67,13 +67,14 @@ return array(
                         'label' => 'Lista newsów',
                         'route' => 'post-list',
                         'params' => array('category' => 'news'),
-                        'visibleInPrimary' => true
+                        'visibleInPrimary' => true,
+                        'id' => 4,
                     ),
                     array(
                         'label' => 'Tworzenie newsa',
                         'route' => 'post-list/post-create',
                         'params' => array('category' => 'news'),
-                        'visibleInPrimary' => false
+                        'visibleInPrimary' => false,
                     ),
                     array(
                         'label' => 'Edycja newsa',
@@ -91,13 +92,14 @@ return array(
                         'label' => 'Lista wydarzeń',
                         'route' => 'post-list',
                         'params' => array('category' => 'event'),
-                        'visibleInPrimary' => true
+                        'visibleInPrimary' => true,
+                        'id' => 2,
                     ),
                     array(
                         'label' => 'Tworzenie wydarzenia',
                         'route' => 'post-list/post-create',
                         'params' => array('category' => 'event'),
-                        'visibleInPrimary' => false
+                        'visibleInPrimary' => false,
                     ),
                     array(
                         'label' => 'Edycja wydarzenia',
@@ -115,7 +117,8 @@ return array(
                         'label' => 'Planowanie imprezy',
                         'route' => 'post-list',
                         'params' => array('category' => 'planning'),
-                        'visibleInPrimary' => true
+                        'visibleInPrimary' => true,
+                        'id' => 4,
                     ),
                     array(
                         'label' => 'Tworzenie planu',
@@ -141,7 +144,7 @@ return array(
                 'label' => 'Slider',
                 'route' => 'slider-main',
                 'class' => 'fa fa-picture-o',
-                'id'    => 2,
+                'id'    => 4,
                 'pages' => array(
                     array(
                         'label' => 'Dodaj nowy',

@@ -42,7 +42,7 @@ return array(
                     'all'	=> 'superadmin',
                 ),
                 'CmsIr\Post\Controller\Post' => array(
-                    'all'	=> 'superadmin',
+                    'all'	=> 'user',
                 ),
             )
         )
