@@ -440,7 +440,7 @@ class PageController extends AbstractActionController
             $transport = $this->getServiceLocator()->get('mail.transport');
             $message = new Message();
             $this->getRequest()->getServer();
-            $message->addTo('idzikkrzysztof91@gmail.com')
+            $message->addTo('dzikus1991@gmail.com')
                 ->addFrom('mailer@web-ir.pl')
                 ->setEncoding('UTF-8')
                 ->setSubject('Wiadomość z formularza kontaktowego')
